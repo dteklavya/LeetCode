@@ -2,8 +2,6 @@
 # Needs Python 3.x
 
 
-from math import factorial
-
 class Solution:
     def sumOfSubarrayMinimums(self, a):
         start, end = 0, 0
@@ -44,15 +42,37 @@ class Solution:
             total += a[i]
             if i != 0:
                 for j in range(i-1, -1, -1):
-                    lc += 1
-#                     print("(" + str(i) + ", " + str(j) + ")", " sliced: ", str(j) + ':' + str(i+1), a[j:i+1])
-                    if i - j == 1:
-                        track[(i, j)] = min(a[j:i+1])
+                    
+                    minion = 0
+                    
+                    if i - j == 1 and tuple([j, i]) not in track:
+                        print("(" + str(j) + ", " + str(i) + ")", " sliced: ", str(j) + ':' + str(i+1), a[j:i+1])
+                        minion = min(a[j:i+1])
+                        track[(j, i)] = minion
+                        llo.append(a[j:i+1])
+                        lc += 1
+                    elif i - j > 1:
+                        
+                        if tuple([j, i]) not in track:
+                            minion += min(a[j], track[j+1, i])
+                            track[(j, i)] = minion
+                            
+                            llo.append(a[j:i])
+                            lc += 1
+                            
+                        if tuple([j, i-1]) not in track:
+                            print(tuple([j, i-1]), "Not in", track, a[j:i], min(a[j:i]))
+                            minion += min(a[j:i])
+                            track[(j, i-1)] = minion
+                            
+                            llo.append(a[j:i-1])
+                            lc += 1
+                        
                     else:
-                        track[(i, j)] = min(a[j], track[i, j+1])
-                    total += track[(i, j)]
-                    llo.append(a[j:i+1])
-        print(a, track)
+                        continue
+                    total += minion
+#                     llo.append(a[j:i+1])
+        print(a, "\n", track, "\n")
         print(llo)
         print("Loop count: ", lc, " Sum: ", total)
         return total
@@ -61,17 +81,7 @@ class Solution:
 s = Solution()
 a = [3, 1, 2, 4]
 # a = [48,87,27]
-a = [1, 2, 3, 4, 5]
+# a = [1, 2, 3, 4, 5]
 # s.sumOfSubarrayMinimums(a)
 s.faster(a)
-
-def prefix_sums(a):
-    n = len(a)
-    p = [0] * (n+1)
-    for i in range(1, n+1):
-        p[i] = p[i-1] + a[i-1]
-    print(p)
-    return p
-
-# prefix_sums([2, 3, 7, 5, 1, 3, 9])
 
