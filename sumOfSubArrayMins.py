@@ -80,8 +80,8 @@ class Solution:
         
 s = Solution()
 a = [3, 1, 2, 4]
-# a = [48,87,27]
-# a = [1, 2, 3, 4, 5]
+a = [48,87,27]
+a = [1, 2, 3, 4]
 # s.sumOfSubarrayMinimums(a)
 s.faster(a)
 
