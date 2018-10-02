@@ -2,42 +2,43 @@
 # Needs Python 3.x
 
 
-# n = int(input())
-# a = [int(i) for i in input().split()]
+def minimumSumSlicesUnsorted(a):
+    n = max(a)
+    
+    b = [0] * (n+1)
+    
+    left = [i for i in range(n+2)]
+    right = [i for i in range(n+2)]
+    
+    result = 0
+    
+    # Calculation indexes for all items in a and storing indexes in b
+    for i, v in enumerate(a):
+        b[ v ] = i + 1
+    
+    print(b)
+    print()
+    
+    for i in range(n, 0, -1):
+        if b[i] == 0:
+            continue
+        index = b[i]
+        
+        l, r = left[index], right[index]
+        result += i * (index - l + 1) * (r - index + 1)
+        print('i=', i, 'index=', index, 'l=', l, 'r=', r, 'calculations = ', str(i) + ' * ' + str((index - l + 1)) + ' * ' + str((r - index + 1)))
+        print()
+        
+        left[r+1], right[l-1] = l, r
+        
+        print(result, left, right)
+        print()
+    print(result)
+    return result
 
 
-# n = 4
 a = [3, 1, 2, 4]
 # a = [48,87,27]
 # a = [1, 2, 3, 4]
 
-n = len(a)
-
-b = [0] * (n+1)
-
-l = [i for i in range(n+2)]
-r = [i for i in range(n+2)]
-
-ans = 0
-
-print(b, l, r)
-
-# Calculation indexes for all items in a and storing indexes in b
-for i in range(n):
-    b[ a[i] ] = i
-
-print(b)
-print()
-
-for i in range(n, 0, -1):
-    m = b[i]
-    x, y = l[m], r[m]
-    ans += i * (m - x + 1) * (y - m + 1)
-    print('i=', i, 'm=', m, 'x=', x, 'y=', y, 'calculations = ', str(i) + ' * ' + str((m - x + 1)) + ' * ' + str((y - m + 1)))
-    print()
-    
-    l[y+1], r[x-1] = x, y
-    
-    print(ans, l, r)
-    print()
-print(ans)
+minimumSumSlicesUnsorted(a)
