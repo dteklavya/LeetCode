@@ -11,9 +11,9 @@ def stockSpan(a):
     for i, v in enumerate(a):
         count = 1
         while st and a[i] >= a[st[-1]]:
-            print("cmp:", v, a[st[-1]], "count", count, st, result)
+#             print("cmp:", v, a[st[-1]], "count", count, st, result)
             j = st.pop()
-            print("Eqn: ", i, j, result[j])
+#             print("Eqn: ", i, j, result[j])
             # Following is a redundant line of code as the calc is repeated.
             count = i - j + result[j]
         st.append(i)
