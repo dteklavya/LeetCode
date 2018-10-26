@@ -2,52 +2,67 @@
 # This needs Python 3.x
 
 
+def isValid(o, t):
+    valid = 0
+    for i in o.keys():
+        if i in t and t[i] >= o[i]:
+            valid = 1
+        else:
+            return 0
+    return valid
+
+
+
+
 def solution(s, t):
     if not t or not s:
         return ''
     
-    t_dict = {}
+    tdict = {}
+    odict = {}
     for i in t:
-        t_dict[i] = t_dict.get(i, 0) + 1
-    odict = {i : v for i, v in t_dict.items()}
+        odict[i] = odict.get(i, 0) + 1
+#     odict = {i : v for i, v in t_dict.items()}
         
     l, r = 0, 0
     result = ''
     lens = len(s)
-    print(t_dict)
+    print(odict)
     
     sublen = lens
     
     while r < lens:
         endchar = s[r]
-        if endchar in t_dict:
-            t_dict[endchar] -= 1
+        if endchar in odict:
+            tdict[endchar] = tdict.get(endchar, 0) + 1
             
-        print("Outer", s[l:r+1], t_dict)
+        print("Outer", s[l:r+1], tdict)
 
-        while sum(t_dict.values()) == 0:
+        while isValid(odict, tdict):
             cdict = {}
             for i in s[l:r+1]:
                 if i in odict:
                     cdict[i] = cdict.get(i, 0) + 1
-            if r - l < sublen and cdict == odict:
+            if r - l < sublen:
                 sublen = r -l
                 result = s[l:r+1]
             
             startchar = s[l]
-            if startchar in t_dict:
-                t_dict[startchar] += 1
-            print("\tInner", s[l:r+1], t_dict)
+            if startchar in tdict:
+                tdict[startchar] -= 1
+            print("\tInner", s[l:r+1], tdict)
             l += 1
         r += 1
 
     return result
 
-print(solution('ADOBECODEBANC', 'ABC'))
-print(solution('ADOZZZBECODEBAAAABCNC', 'ABC'))
-print(solution('ADOBECABODEBANC', 'ABC'))
+# print(solution('ADOBECODEBANC', 'ABC')) # Result BANC
+# print(solution('ADOZZZBECODEBAAAABCNC', 'ABC')) # Result ABC
+# print(solution('ADOBECABODEBANC', 'ABC')) # Result CAB
 
 # print(solution("aaaaaaaaaaaabbbbbcdd", "abcdd"))
+
+# print(solution('xxxzzzsss', 'ABC'))
 
 exit()
 
