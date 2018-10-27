@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # This needs Python 3.x
-from sortArrayByParity import solution
 
+import unittest
 
 class Solution:
 
@@ -50,12 +50,26 @@ class Solution:
     
         return result
 
-solution = Solution()
-
-print(solution.minWindow('ADOBECODEBANC', 'ABC')) # Result BANC
-print(solution.minWindow('ADOZZZBECODEBAAAABCNC', 'ABC')) # Result ABC
-print(solution.minWindow('ADOBECABODEBANC', 'ABC')) # Result CAB
-
-print(solution.minWindow("aaaaaaaaaaaabbbbbcdd", "abcdd")) # Result abbbbbcdd
+# solution = Solution()
+# 
+# print(solution.minWindow('ADOBECODEBANC', 'ABC')) # Result BANC
+# print(solution.minWindow('ADOZZZBECODEBAAAABCNC', 'ABC')) # Result ABC
+# print(solution.minWindow('ADOBECABODEBANC', 'ABC')) # Result CAB
+# 
+# print(solution.minWindow("aaaaaaaaaaaabbbbbcdd", "abcdd")) # Result abbbbbcdd
 
 # print(solution('xxxzzzsss', 'ABC'))
+
+class TestMinimumWindowSubstring(unittest.TestCase):
+    def test_minWindow(self):
+        s, t = 'ADOBECODEBANC', 'ABC'
+        solution = Solution()
+        self.assertEqual(solution.minWindow(s, t), 'BANC', "Failed for " + s)
+        s, t = 'ADOZZZBECODEBAAAABCNC', 'ABC'
+        self.assertEqual(solution.minWindow(s, t), 'ABC', "Failed for " + s)
+        s, t = 'ADOBECABODEBANC', 'ABC'
+        self.assertEqual(solution.minWindow(s, t), 'CAB', "Failed for " + s)
+        s, t = "aaaaaaaaaaaabbbbbcdd", "abcdd"
+        self.assertEqual(solution.minWindow(s, t), 'abbbbbcdd', "Failed for " + s)
+        
+        
