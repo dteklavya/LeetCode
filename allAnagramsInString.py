@@ -18,19 +18,22 @@ class Solution:
         result = []
         lens = len(s)
         lent = len(t)
+        count = 0
         
         while r < lens:
             endchar = s[r]
             if endchar in odict:
                 tdict[endchar] = tdict.get(endchar, 0) + 1
+                count += 1
 #             print(endchar, odict, tdict)
                 
-            while sum(tdict.values()) == lent:
+            while count == lent:
                 if r - l + 1 == lent and tdict == odict:
                     result.append(r - lent + 1)
                 startchar = s[l]
                 if startchar in odict:
                     tdict[startchar] = tdict.get(startchar, 0) - 1
+                    count -= 1
 #                     print(startchar, tdict)
                 l += 1
             r += 1
