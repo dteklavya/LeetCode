@@ -7,7 +7,7 @@ class Solution:
 
     def allAnagrams(self, s, t):
         if not t or not s:
-            return ''
+            return []
         
         tdict = {}
         odict = {}
